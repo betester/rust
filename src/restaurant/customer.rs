@@ -9,7 +9,6 @@ pub struct Customer {
 
 impl Customer {
     fn order_menu(&self,food_name : String) {
-        let menu = &self.visiting_restaurant.menu;
         
     }
 
