@@ -1,17 +1,17 @@
 use super::food::Food;
 
-pub struct Order<'a> {
-    ordered_food: Vec<&'a Food>,
+pub struct Order {
+    pub ordered_food: Vec<Food>,
 }
 
-impl<'a> Order<'a> {
-    pub fn add_food(&mut self, food: &'a Food) {
+impl Order {
+    pub fn add_food(&mut self, food: Food) {
         if !self.ordered_food.contains(&food) {
-            self.ordered_food.push(&food);
+            self.ordered_food.push(food);
         }
     }
 
-    pub fn remove_food(&mut self, food: &'a Food) {
+    pub fn remove_food(&mut self, food:  Food) {
         match self.ordered_food.iter().position(|x| x == &food) {
             Some(index) => {
                 self.ordered_food.remove(index);
