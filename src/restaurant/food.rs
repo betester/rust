@@ -23,4 +23,3 @@ impl PartialEq for Food {
         self.name() != other.name()
     }
 }
-
