@@ -1,7 +1,7 @@
 use super::restaurant::Restaurant;
 
 pub struct Customer {
-    money : u32,
+    money : f32,
     number_seat : u32,
     visiting_restaurant : Restaurant,
 
