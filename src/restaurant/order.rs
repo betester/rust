@@ -26,7 +26,7 @@ impl Order {
         let mut price: f32 = 0.0;
         let mut ordered_food_iterator = self.ordered_food.iter().peekable();
 
-        while ordered_food_iterator.next().is_some() {
+        while ordered_food_iterator.peek().is_some() {
             price = price + ordered_food_iterator.next().unwrap().price;
         }
 
