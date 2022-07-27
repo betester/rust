@@ -1,4 +1,6 @@
-use super::{food_type::FoodType, food::Food};
+use std::{thread, time};
+
+use super::{food_type::FoodType, food::Food, food_status::FoodStatus};
 
 pub struct Chef {
     food_specialties : Vec<FoodType>,
@@ -6,7 +8,8 @@ pub struct Chef {
 }
 
 impl Chef {
-    fn cook_food(&self, food: Food) {
-        
+    pub fn cook_food(&self, mut food: Food) {
+        thread::sleep(food.cooking_time_estimation);
+        food.change_food_status(FoodStatus::COOKED);
     }
 }
