@@ -10,13 +10,15 @@ pub struct Chef {
 
 impl Chef {
     // TODO: make asynchronous on the future
+    pub fn handle_order() {
+        
+    }
+
     pub fn cook_food(&mut self, mut food: Food) {
         if !(self.is_able_to_cook(&food)) {
             return;
         }
-        self.order_taken += 1;
         thread::sleep(food.cooking_time_estimation);
-        self.order_taken -= 1;
         food.change_food_status(FoodStatus::COOKED);
     }
 

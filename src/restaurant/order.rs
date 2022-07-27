@@ -1,11 +1,12 @@
-use super::{food::Food, food_status::FoodStatus};
+use super::{food::Food, food_status::FoodStatus, customer::Customer};
 
-pub struct Order {
+pub struct Order<'a> {
     // TODO: for efficient implementation, use avl tree
     pub ordered_food: Vec<Food>,
+    pub customer : &'a Customer<'a>
 }
 
-impl Order {
+impl<'a> Order<'a> {
     pub fn add_food(&mut self, food: Food) {
         if !self.ordered_food.contains(&food) {
             self.ordered_food.push(food);

@@ -2,10 +2,10 @@ use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Resta
 use std::thread;
 
 pub struct Customer<'a> {
-    money: f32,
-    number_seat: u32,
-    visiting_restaurant: Option<&'a Restaurant<'a>>,
-    order: Order,
+    pub money: f32,
+    pub number_seat: u32,
+    pub visiting_restaurant: Option<&'a Restaurant<'a>>,
+    pub order: Order<'a>,
 }
 
 impl<'a> Customer<'a> {
