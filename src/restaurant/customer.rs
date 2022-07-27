@@ -1,15 +1,15 @@
-use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Restaurant};
+use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Restaurant, food::Food};
 use std::thread;
 
 pub struct Customer<'a> {
     money: f32,
     number_seat: u32,
-    visiting_restaurant: Option<&'a Restaurant>,
+    visiting_restaurant: Option<&'a Restaurant<'a>>,
     order: Order,
 }
 
 impl<'a> Customer<'a> {
-    fn order_menu(&self, food_name: String, menu: Menu) {
+    fn order_menu(&mut self, food_name: String, menu: Menu) {
         if self.order.is_food_ordered(&food_name) {
             match menu.get_food_by_name(food_name) {
                 Some(i) => self.order.add_food(i.clone()),
@@ -18,7 +18,7 @@ impl<'a> Customer<'a> {
         }
     }
 
-    fn visit_restaurant(&self, restaurant: &'a Restaurant) {
+    fn visit_restaurant(&mut self, restaurant: &'a Restaurant) {
         match self.visiting_restaurant {
             Some(visited_restaurant) => {
                 println!("You are currently visiting {}", visited_restaurant.name)
@@ -27,20 +27,18 @@ impl<'a> Customer<'a> {
         }
     }
 
-    fn leave_restaurant(&self) {
+    fn leave_restaurant(&mut self) {
         match self.visiting_restaurant {
             Some(visited_restaurant) => self.visiting_restaurant = None,
             None => println!("You are not visiting any restaurant"),
         }
     }
 
-    fn eat(&self) {
+    fn eat(&self, food: &mut Food) {
         // need to use observer pattern to know when the food is cooked
-        for food in &self.order.ordered_food {
-            if food.status == FoodStatus::COOKED {
-                thread::sleep(food.cooking_time_estimation);
-                food.status = FoodStatus::EATEN;
-            }
+        if food.status == FoodStatus::COOKED {
+            thread::sleep(food.cooking_time_estimation);
+            food.status = FoodStatus::EATEN;
         }
     }
 

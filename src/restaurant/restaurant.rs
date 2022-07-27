@@ -1,16 +1,16 @@
 use super::{customer::Customer, menu::Menu, chef::Chef};
 
-pub struct Restaurant {
-    name : String,
-    adress : String,
-    rating : String,
-    available_seats : u32,
-    customers : Vec<Customer>,
-    chefs : Vec<Chef>,
+pub struct Restaurant<'a> {
+    pub name : String,
+    pub adress : String,
+    pub rating : String,
+    pub available_seats : u32,
+    pub customers : Vec<Customer<'a>>,
+    pub chefs : Vec<Chef>,
     pub menu : Menu,
 }
 
-impl Restaurant {
+impl<'a> Restaurant<'a> {
 
     fn add_food_menu(&self) {
 
