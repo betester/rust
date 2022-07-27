@@ -1,15 +1,18 @@
-use super::{restaurant::Restaurant, menu::Menu};
+use super::{restaurant::Restaurant, menu::Menu,order::Order};
 
-pub struct Customer {
+pub struct Customer<'a> {
     money : f32,
     number_seat : u32,
     visiting_restaurant : Restaurant,
 
 }
 
-impl Customer {
-    fn order_menu(&self,food_name : String) {
-        
+impl<'a> Customer<'a> {
+    fn order_menu(&self,food_name : String,order : &'a Order,menu: &'a Menu) {
+        match menu.get_food_by_name(food_name) {
+            Some(i) => order.add_food(i),
+            None => println!("There are no such food")
+        }
     }
 
     fn visit_restaurant(&self) {
