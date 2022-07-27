@@ -1,24 +1,57 @@
-use super::{menu::Menu, order::Order, restaurant::Restaurant};
+use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Restaurant};
+use std::thread;
 
-pub struct Customer {
+pub struct Customer<'a> {
     money: f32,
     number_seat: u32,
-    visiting_restaurant: Option<Restaurant>,
+    visiting_restaurant: Option<&'a Restaurant>,
+    order: Order,
 }
 
-impl Customer {
-    fn order_menu(&self, food_name: String, order: Order, menu: Menu) {
-        match menu.get_food_by_name(food_name) {
-            Some(i) => order.add_food(i),
-            None => println!("There are no such food"),
+impl<'a> Customer<'a> {
+    fn order_menu(&self, food_name: String, menu: Menu) {
+        if self.order.is_food_ordered(&food_name) {
+            match menu.get_food_by_name(food_name) {
+                Some(i) => self.order.add_food(i.clone()),
+                None => println!("There are no such food"),
+            }
         }
     }
 
-    fn visit_restaurant(&self, restaurant: &Restaurant) {}
+    fn visit_restaurant(&self, restaurant: &'a Restaurant) {
+        match self.visiting_restaurant {
+            Some(visited_restaurant) => {
+                println!("You are currently visiting {}", visited_restaurant.name)
+            }
+            None => self.visiting_restaurant = Some(restaurant),
+        }
+    }
 
-    fn leave_restaurant(&self) {}
+    fn leave_restaurant(&self) {
+        match self.visiting_restaurant {
+            Some(visited_restaurant) => self.visiting_restaurant = None,
+            None => println!("You are not visiting any restaurant"),
+        }
+    }
 
-    fn eat(&self, order: &Order) {}
+    fn eat(&self) {
+        // need to use observer pattern to know when the food is cooked
+        for food in &self.order.ordered_food {
+            if food.status == FoodStatus::COOKED {
+                thread::sleep(food.cooking_time_estimation);
+                food.status = FoodStatus::EATEN;
+            }
+        }
+    }
 
-    fn pay(&self) {}
+    fn pay(&self) {
+        if self.order.is_all_food_eaten() {
+            let total_cost = self.order.calculate_price();
+            if self.money >= total_cost {
+                println!("Thank you for eating here, please come again")
+            } else {
+                println!("Get out!")
+            }
+        }
+    }
 }

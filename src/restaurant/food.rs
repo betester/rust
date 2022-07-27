@@ -1,14 +1,14 @@
 use std::time::{self, Duration};
 
 use super::{food_type::FoodType, food_status::FoodStatus};
-
+#[derive(Clone)]
 pub struct Food {
     pub name : String,
     pub price : f32,
     pub cooking_time_estimation : Duration,
     pub eating_time_estimation : Duration,
     pub food_type : FoodType,
-    status : FoodStatus,
+    pub status : FoodStatus,
 }
 
 impl Food {

@@ -1,6 +1,7 @@
-use super::food::Food;
+use super::{food::Food, food_status::FoodStatus};
 
 pub struct Order {
+    // TODO: for efficient implementation, use avl tree
     pub ordered_food: Vec<Food>,
 }
 
@@ -22,6 +23,16 @@ impl Order {
         }
     }
 
+    pub fn is_food_ordered(&self, food_name : &String) -> bool{
+        for food in &self.ordered_food {
+            if &food.name == food_name {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     pub fn calculate_price(&self) -> f32 {
         let mut price: f32 = 0.0;
         let mut ordered_food_iterator = self.ordered_food.iter().peekable();
@@ -31,5 +42,14 @@ impl Order {
         }
 
         return price;
+    }
+
+    pub fn is_all_food_eaten(&self) -> bool {
+        for food in &self.ordered_food {
+            if food.status != FoodStatus::EATEN {
+                return false;
+            }
+        }
+        return true;
     }
 }
