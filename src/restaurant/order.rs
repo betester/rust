@@ -34,6 +34,10 @@ impl<'a> Order<'a> {
         return false;
     }
 
+    pub fn notify_customer(&self,cooked_food : &mut Food) {
+        self.customer.eat(cooked_food);
+    }
+
     pub fn calculate_price(&self) -> f32 {
         let mut price: f32 = 0.0;
         let mut ordered_food_iterator = self.ordered_food.iter().peekable();
