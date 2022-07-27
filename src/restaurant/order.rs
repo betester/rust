@@ -27,7 +27,7 @@ impl Order {
         let mut ordered_food_iterator = self.ordered_food.iter().peekable();
 
         while ordered_food_iterator.next().is_some() {
-            price = price + ordered_food_iterator.next().unwrap().price();
+            price = price + ordered_food_iterator.next().unwrap().price;
         }
 
         return price;

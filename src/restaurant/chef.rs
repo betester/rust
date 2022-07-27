@@ -1,4 +1,4 @@
-use super::food_type::FoodType;
+use super::{food_type::FoodType, food::Food};
 
 pub struct Chef {
     food_specialties : Vec<FoodType>,
@@ -6,7 +6,7 @@ pub struct Chef {
 }
 
 impl Chef {
-    fn cook_food(&self) {
+    fn cook_food(&self, food: Food) {
         
     }
 }
