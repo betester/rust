@@ -1,4 +1,4 @@
-use super::restaurant::Restaurant;
+use super::{restaurant::Restaurant, menu::Menu};
 
 pub struct Customer {
     money : f32,
@@ -8,7 +8,8 @@ pub struct Customer {
 }
 
 impl Customer {
-    fn order_menu(&self) {
+    fn order_menu(&self,food_name : String) {
+        let menu = &self.visiting_restaurant.menu;
         
     }
 
@@ -18,6 +19,10 @@ impl Customer {
 
     fn leave_restaurant(&self) {
 
+    }
+
+    fn eat(&self) {
+        
     }
 
     fn pay(&self) {

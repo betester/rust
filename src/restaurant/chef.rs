@@ -1,4 +1,4 @@
-use std::{thread, time};
+use std::thread;
 
 use super::{food::Food, food_status::FoodStatus, food_type::FoodType};
 

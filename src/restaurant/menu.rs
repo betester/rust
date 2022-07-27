@@ -11,6 +11,15 @@ impl Menu {
         }
     }
 
+    pub fn get_food_by_name(&self, food_name : String) -> Option<&Food> {
+        for food in &self.foods {
+            if food.name == food_name {
+                return Some(&food);
+            }
+        }
+        None
+    }
+
     pub fn remove_food(&mut self, food: Food) {
         match self.foods.iter().position(|x| x == &food) {
             Some(index) => {

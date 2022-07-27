@@ -7,7 +7,7 @@ pub struct Restaurant {
     available_seats : u32,
     customers : Vec<Customer>,
     chefs : Vec<Chef>,
-    menu : Menu,
+    pub menu : Menu,
 }
 
 impl Restaurant {
