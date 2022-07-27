@@ -1,4 +1,4 @@
-use super::{customer::Customer, menu::Menu, chef::Chef, waiter::Waiter};
+use super::{customer::Customer, menu::Menu, chef::Chef};
 
 pub struct Restaurant {
     name : String,
