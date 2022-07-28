@@ -2,6 +2,7 @@ use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Resta
 use std::thread;
 
 pub struct Customer<'a> {
+    pub username : String,
     pub money: f32,
     pub number_seat: u32,
     pub visiting_restaurant: Option<&'a Restaurant<'a>>,
@@ -9,7 +10,7 @@ pub struct Customer<'a> {
 }
 
 impl<'a> Customer<'a> {
-    fn order_menu(&mut self, food_name: String, menu: Menu) {
+    pub fn order_menu(&mut self, food_name: String, menu: Menu) {
         if self.order.is_food_ordered(&food_name) {
             match menu.get_food_by_name(food_name) {
                 Some(i) => self.order.add_food(i.clone()),
@@ -18,7 +19,7 @@ impl<'a> Customer<'a> {
         }
     }
 
-    fn visit_restaurant(&mut self, restaurant: &'a Restaurant) {
+    pub fn visit_restaurant(&mut self, restaurant: &'a Restaurant) {
         match self.visiting_restaurant {
             Some(visited_restaurant) => {
                 println!("You are currently visiting {}", visited_restaurant.name)
@@ -27,7 +28,7 @@ impl<'a> Customer<'a> {
         }
     }
 
-    fn leave_restaurant(&mut self) {
+    pub fn leave_restaurant(&mut self) {
         match self.visiting_restaurant {
             Some(visited_restaurant) => self.visiting_restaurant = None,
             None => println!("You are not visiting any restaurant"),
@@ -42,7 +43,7 @@ impl<'a> Customer<'a> {
         }
     }
 
-    fn pay(&self) {
+    pub fn pay(&self) {
         if self.order.is_all_food_eaten() {
             let total_cost = self.order.calculate_price();
             if self.money >= total_cost {

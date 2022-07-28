@@ -3,9 +3,10 @@ use std::thread;
 use super::{food::Food, food_status::FoodStatus, food_type::FoodType, order::Order};
 
 pub struct Chef {
-    food_specialties: Vec<FoodType>,
-    max_order_taken: u32,
-    order_taken: u32,
+    pub chef_id : u32,
+    pub food_specialties: Vec<FoodType>,
+    pub max_order_taken: u32,
+    pub order_taken: u32,
 }
 
 impl Chef {
@@ -20,5 +21,11 @@ impl Chef {
 
     fn is_able_to_cook(&self, food: &Food) -> bool {
         self.food_specialties.contains(&food.food_type) && self.order_taken <= self.max_order_taken
+    }
+}
+
+impl PartialEq for Chef {
+    fn eq(&self, other: &Self) -> bool {
+        self.chef_id == other.chef_id
     }
 }
