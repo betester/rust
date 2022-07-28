@@ -4,7 +4,7 @@ use super::{customer::{Customer}, menu::Menu, chef::Chef, food::Food};
 pub struct Restaurant<'a> {
     pub name : String,
     pub adress : String,
-    pub rating : String,
+    pub rating : u8,
     pub available_seats : usize,
     pub customers : Vec<&'a Customer<'a>>,
     pub chefs : Vec<&'a Chef>,
@@ -79,7 +79,4 @@ impl<'a> Restaurant<'a> {
 
     
 
-    pub fn set_rating(&mut self, rating: String) {
-        self.rating = rating;
-    }
 }

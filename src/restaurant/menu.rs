@@ -1,7 +1,7 @@
 use super::food::Food;
 
 pub struct Menu {
-    foods: Vec<Food>,
+    pub foods: Vec<Food>,
 }
 
 impl Menu {
