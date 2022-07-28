@@ -72,3 +72,15 @@ pub fn get_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
         }
     };
 }
+
+pub fn add_food_menu() {
+    
+}
+
+pub fn add_chef() {
+
+}
+
+pub fn remove_chef() {
+    
+}
