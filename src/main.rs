@@ -21,13 +21,15 @@ fn handle_query(
     restaurants: &mut HashMap<String, Restaurant>,
 ) {
 
-    println!("Welcome to scuffed restaurant handler, here are the list of order that you can do: ( insert number )");
-    println!("1. Create Restaurant");
-    println!("2. Create Customer");
-    println!("3. Create Chef");
-    println!("4. Done");
+
 
     loop {
+        println!("Welcome to scuffed restaurant handler, here are the list of order that you can do: ( insert number )");
+        println!("1. Create Restaurant");
+        println!("2. Create Customer");
+        println!("3. Create Chef");
+        println!("4. Done");
+        
         let mut query = String::new();
 
         io::stdin()
