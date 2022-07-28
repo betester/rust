@@ -192,6 +192,15 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     println!("food has been added!");
 }
 
-pub fn add_chef() {}
+pub fn add_chef<'a>(restaurant: &'a mut Restaurant<'a>, chefs:  HashMap<u32, &'a Chef>) {
+    let mut chef_id = String::new();
+
+    io::stdin().read_line(&mut chef_id).expect("Failed to read input");
+
+    let chef_id = chef_id.trim().parse().expect("Please insert a number");
+    let chef = chefs.get(&chef_id).unwrap();
+
+    restaurant.add_chefs(chef);
+}
 
 pub fn remove_chef() {}
