@@ -1,7 +1,7 @@
 use std::path::Iter;
 
 use super::{food::Food, food_status::FoodStatus, customer::Customer};
-
+#[derive(Debug)]
 pub struct Order<'a> {
     // TODO: for efficient implementation, use avl tree
     pub ordered_food: Vec<Food>,

@@ -9,18 +9,52 @@ pub mod restaurant;
 
 fn main() {
     let mut customers = HashMap::<String, Customer>::new();
-    let mut chefs = HashMap::<String, Chef>::new();
+    let mut chefs = HashMap::<u32, Chef>::new();
     let mut restaurants = HashMap::<String, Restaurant>::new();
+
+    handle_query(&mut chefs, &mut customers, &mut restaurants)
+}
+
+fn handle_query(
+    chefs: &mut HashMap<u32, Chef>,
+    customers: &mut HashMap<String, Customer>,
+    restaurants: &mut HashMap<String, Restaurant>,
+) {
+
+    println!("Welcome to scuffed restaurant handler, here are the list of order that you can do: ( insert number )");
+    println!("1. Create Restaurant");
+    println!("2. Create Customer");
+    println!("3. Create Chef");
+    println!("4. Done");
+
+    loop {
+        let mut query = String::new();
+
+        io::stdin()
+            .read_line(&mut query)
+            .expect("Failed to read input");
+
+        let query: u32 = query.trim().parse().expect("Please input a number");
+
+        match query {
+            1 => create_restaurant(restaurants),
+            2 => create_customer(customers),
+            3 => create_chef(chefs),
+            other => {break}
+        }
+    }
 }
 
 fn create_customer(customers: &mut HashMap<String, Customer>) {
     let mut username = String::new();
     let mut money = String::new();
 
+    println!("please insert the username: ");
     io::stdin()
         .read_line(&mut username)
         .expect("Failed to read input");
 
+    println!("please insert the amount of money : ");
     io::stdin()
         .read_line(&mut money)
         .expect("Failed to read input");
@@ -35,6 +69,7 @@ fn create_customer(customers: &mut HashMap<String, Customer>) {
     };
 
     customers.insert(username, new_customer);
+    println!("Customer created!");
 }
 
 fn create_chef(chefs: &mut HashMap<u32, Chef>) {
@@ -43,10 +78,12 @@ fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     let mut food_specialties = Vec::<FoodType>::new();
     let mut max_order_taken = String::new();
 
+    println!("please insert the chef id (it has to be unique");
     io::stdin()
         .read_line(&mut chef_id)
         .expect("Failed to read input");
 
+    println!("please insert the amount of order that the chef can take");
     io::stdin()
         .read_line(&mut max_order_taken)
         .expect("Failed to read input");
@@ -93,9 +130,11 @@ fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     };
 
     chefs.insert(new_chef.chef_id, new_chef);
+    println!("Chef created!");
+
 }
 
-fn create_restaurant(restaurants : &mut HashMap<String,Restaurant>) {
+fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let mut name = String::new();
     let mut adress = String::new();
     let mut rating = String::new();
@@ -105,18 +144,22 @@ fn create_restaurant(restaurants : &mut HashMap<String,Restaurant>) {
     let foods = Vec::<Food>::new();
     let menu = Menu { foods };
 
+    println!("please insert the name of the restaurant");
     io::stdin()
         .read_line(&mut name)
         .expect("Failed to read input");
 
+    println!("please insert the adress of the restaurant");
     io::stdin()
         .read_line(&mut adress)
         .expect("Failed to read input");
 
+    println!("please insert the rating of the restaurant");
     io::stdin()
         .read_line(&mut rating)
         .expect("Failed to read input");
 
+    println!("please insert the available seats of the restaurant");
     io::stdin()
         .read_line(&mut available_seats)
         .expect("Failed to read input");
@@ -134,9 +177,9 @@ fn create_restaurant(restaurants : &mut HashMap<String,Restaurant>) {
         available_seats,
         customers,
         chefs,
-        menu
+        menu,
     };
 
     restaurants.insert(new_restaurant.name.clone(), new_restaurant);
-    
+    println!("Restaurant created!");
 }

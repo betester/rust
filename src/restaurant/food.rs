@@ -2,6 +2,7 @@ use std::time::{self, Duration};
 
 use super::{food_type::FoodType, food_status::FoodStatus};
 #[derive(Clone)]
+#[derive(Debug)]
 pub struct Food {
     pub name : String,
     pub price : f32,

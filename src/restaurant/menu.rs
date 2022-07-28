@@ -1,5 +1,5 @@
 use super::food::Food;
-
+#[derive(Debug)]
 pub struct Menu {
     pub foods: Vec<Food>,
 }

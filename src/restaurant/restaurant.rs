@@ -1,6 +1,6 @@
 
 use super::{customer::{Customer}, menu::Menu, chef::Chef, food::Food};
-
+#[derive(Debug)]
 pub struct Restaurant<'a> {
     pub name : String,
     pub adress : String,

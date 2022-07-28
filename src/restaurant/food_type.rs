@@ -1,4 +1,5 @@
 #[derive(Clone)]
+#[derive(Debug)]
 pub enum FoodType {
     SeaFood,
     LandFood,

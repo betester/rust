@@ -1,7 +1,7 @@
 use std::thread;
 
 use super::{food::Food, food_status::FoodStatus, food_type::FoodType, order::Order};
-
+#[derive(Debug)]
 pub struct Chef {
     pub chef_id : u32,
     pub food_specialties: Vec<FoodType>,

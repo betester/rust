@@ -1,6 +1,6 @@
 use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Restaurant, food::Food};
 use std::thread;
-
+#[derive(Debug)]
 pub struct Customer<'a> {
     pub username : String,
     pub money: f32,
