@@ -20,16 +20,16 @@ fn handle_query(
     customers: &mut HashMap<String, Customer>,
     restaurants: &mut HashMap<String, Restaurant>,
 ) {
-
-
-
     loop {
         println!("Welcome to scuffed restaurant handler, here are the list of order that you can do: ( insert number )");
         println!("1. Create Restaurant");
         println!("2. Create Customer");
         println!("3. Create Chef");
-        println!("4. Done");
-        
+        println!("4. Restaurant Detail");
+        println!("5. Customer Detail");
+        println!("6. Chef Detail");
+        println!("7. Done");
+
         let mut query = String::new();
 
         io::stdin()
@@ -42,7 +42,10 @@ fn handle_query(
             1 => create_restaurant(restaurants),
             2 => create_customer(customers),
             3 => create_chef(chefs),
-            other => {break}
+            4 => get_restaurant(restaurants),
+            5 => get_customer(customers),
+            6 => get_chef(chefs),
+            other => break,
         }
     }
 }
@@ -133,7 +136,6 @@ fn create_chef(chefs: &mut HashMap<u32, Chef>) {
 
     chefs.insert(new_chef.chef_id, new_chef);
     println!("Chef created!");
-
 }
 
 fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
@@ -184,4 +186,71 @@ fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
 
     restaurants.insert(new_restaurant.name.clone(), new_restaurant);
     println!("Restaurant created!");
+}
+
+fn get_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
+    let mut restaurant_name = String::new();
+
+    println!("Insert the restaurant name: ");
+
+    io::stdin()
+        .read_line(&mut restaurant_name)
+        .expect("Failed to read input");
+
+    let restaurant = restaurants.get(&restaurant_name);
+
+    match restaurant {
+        Some(value) => {
+            println!("here are the restaurant json {:?}", restaurant)
+        }
+        None => {
+            println!("Cannot find the restaurant, please try again")
+        }
+    };
+}
+
+fn get_customer(customers: &mut HashMap<String, Customer>) {
+    
+    println!("Insert the customer name: ");
+
+    let mut customer_username = String::new();
+
+    io::stdin()
+        .read_line(&mut customer_username)
+        .expect("Failed to read input");
+
+    let customer = customers.get(&customer_username);
+
+    match customer {
+        Some(value) => {
+            println!("here are the customer json {:?}", customer)
+        }
+        None => {
+            println!("Cannot find the customer, please try again")
+        }
+    };
+}
+
+fn get_chef(chefs: &mut HashMap<u32, Chef>) {
+
+    println!("Insert the chef name: ");
+
+    let mut chef_id = String::new();
+
+    io::stdin()
+        .read_line(&mut chef_id)
+        .expect("Failed to read input");
+
+    let chef_id = chef_id.trim().parse().expect("please input a number");
+
+    let chef = chefs.get(&chef_id);
+
+    match chef {
+        Some(value) => {
+            println!("here are the customer json {:?}", chef)
+        }
+        None => {
+            println!("Cannot find the customer, please try again")
+        }
+    };
 }
