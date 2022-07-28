@@ -49,7 +49,7 @@ fn handle_query(
             4 => get_restaurant(restaurants),
             5 => get_customer(customers),
             6 => get_chef(chefs),
-            other => break,
+            _ => break,
         }
     }
 }

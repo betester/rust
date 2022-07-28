@@ -70,23 +70,37 @@ pub fn get_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
         .read_line(&mut restaurant_name)
         .expect("Failed to read input");
 
-    let restaurant = restaurants.get(&restaurant_name);
+    let restaurant = restaurants.get_mut(&restaurant_name);
 
     match restaurant {
         Some(value) => {
             println!("Here are the restaurant detail :");
-            println!("name: {}", &value.name);
-            println!("address: {}", &value.adress);
-            println!("rating: {}", &value.rating);
-            println!("available seats: {}", &value.available_seats);
+            println!("name: {}", value.name);
+            println!("address: {}", value.adress);
+            println!("rating: {}", value.rating);
+            println!("available seats: {}", value.available_seats);
             println!("chefs: {:?}", value.chefs);
-            println!("chefs: {:?}", &value.menu);
+            println!("chefs: {:?}", value.menu);
 
-            println!("What do you want to do?: (insert number)");
-            println!("1. Add food menu");
-            println!("2. Add chef");
-            println!("3. Remove chef");
-            println!("4. Done");
+            loop {
+                println!("What do you want to do?: (insert number)");
+                println!("1. Add food menu");
+                println!("2. Add chef");
+                println!("3. Remove chef");
+                println!("4. Done");
+
+                let mut user_input = String::new();
+
+                io::stdin()
+                    .read_line(&mut user_input)
+                    .expect("Failed to read input");
+                let user_input = user_input.trim().parse().expect("Please enter a number");
+
+                match user_input {
+                    1 => add_food_menu(value),
+                    _ => break,
+                }
+            }
         }
         None => {
             println!("Cannot find the restaurant, please try again")
@@ -99,7 +113,6 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     let mut price = String::new();
     let mut cooking_time_estimation = String::new();
     let mut eating_time_estimation = String::new();
-    let mut food_type = String::new();
 
     println!("Please enter the food name: ");
     io::stdin()
@@ -111,19 +124,14 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
         .read_line(&mut price)
         .expect("Failed to read input");
 
-    println!("Please enter the food price: (in hour, minute, or second) ");
+    println!("Please enter the cooking time estimation: (in hour, minute, or second) ");
     io::stdin()
         .read_line(&mut cooking_time_estimation)
         .expect("Failed to read input");
 
-    println!("Please enter the food price: (in hour, minute, or second) ");
+    println!("Please enter the eating time estimation: (in hour, minute, or second) ");
     io::stdin()
         .read_line(&mut eating_time_estimation)
-        .expect("Failed to read input");
-
-    println!("Please enter the food type : (Seafood, Airfood, Landfood) ");
-    io::stdin()
-        .read_line(&mut food_type)
         .expect("Failed to read input");
 
     let price: f32 = price.trim().parse().expect("Please input a number");
@@ -133,16 +141,30 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     let mut food_type_obj: FoodType = FoodType::SeaFood;
 
     loop {
-        match food_type.as_str() {
-            "Seafood" => {
+        let mut food_type = String::new();
+
+        println!("Please enter the food type : ");
+        println!("1. Seafood");
+        println!("2. Airfood");
+        println!("3. Landfood");
+
+        io::stdin()
+            .read_line(&mut food_type)
+            .expect("Failed to read input");
+
+        let food_type = food_type.trim().parse().expect("please input a number");
+
+
+        match food_type {
+            1 => {
                 food_type_obj = FoodType::SeaFood;
                 break;
             }
-            "Airfood" => {
+            2 => {
                 food_type_obj = FoodType::AirFood;
                 break;
             }
-            "Landfood" => {
+            3 => {
                 food_type_obj = FoodType::LandFood;
                 break;
             }
