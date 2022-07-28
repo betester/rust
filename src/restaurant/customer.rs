@@ -4,7 +4,6 @@ use std::thread;
 pub struct Customer<'a> {
     pub username : String,
     pub money: f32,
-    pub number_seat: u32,
     pub visiting_restaurant: Option<&'a Restaurant<'a>>,
     pub order: Order<'a>,
 }

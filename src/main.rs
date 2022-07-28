@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::io;
 
 use crate::restaurant::{customer::Customer, chef::Chef};
 
@@ -12,6 +13,7 @@ fn main() {
 }
 
 fn create_customer() {
+    let mut username = String::new();
 
 }
 
@@ -20,6 +22,6 @@ fn create_chef() {
 }
 
 fn create_restaurant() {
-    
+
 }
 
