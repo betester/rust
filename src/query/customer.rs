@@ -49,3 +49,19 @@ pub fn get_customer(customers: &mut HashMap<String, Customer>) {
         }
     };
 }
+
+pub fn order_food() {
+
+}
+
+pub fn visit_restaurant() {
+
+}
+
+pub fn pay() {
+
+}
+
+pub fn leave_restaurant() {
+    
+}
