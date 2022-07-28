@@ -5,20 +5,28 @@ pub struct Customer<'a> {
     pub username : String,
     pub money: f32,
     pub visiting_restaurant: Option<&'a Restaurant<'a>>,
-    pub order: Order<'a>,
+    pub order: Option<Order<'a>>,
 }
 
 impl<'a> Customer<'a> {
     pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
-        if self.order.is_food_ordered(&food_name) {
-            match menu.get_food_by_name(food_name) {
-                Some(i) => {
-                    self.order.add_food(i.clone());
-                    println!("{} has been ordered by {}",food_name,&self.username);
-                },
-                None => println!("There are no such food"),
-            }
+        
+        match &mut self.order {
+            Some(value) => {
+                if value.is_food_ordered(&food_name) {
+                    match menu.get_food_by_name(food_name) {
+                        Some(i) => {
+                            value.add_food(i.clone());
+                            println!("{} has been ordered by {}",food_name,&self.username);
+                        },
+                        None => println!("There are no such food"),
+                    }
+                }
+            },
+            None => println!("No order has been created")
         }
+
+    
     }
 
     pub fn visit_restaurant(&mut self, restaurant: &'a Restaurant) {
@@ -45,14 +53,20 @@ impl<'a> Customer<'a> {
         }
     }
 
-    pub fn pay(&self) {
-        if self.order.is_all_food_eaten() {
-            let total_cost = self.order.calculate_price();
-            if self.money >= total_cost {
-                println!("Thank you for eating here, please come again")
-            } else {
-                println!("Get out!")
-            }
+    pub fn pay(&mut self) {
+        match &mut self.order {
+            Some(value) => {
+                if value.is_all_food_eaten() {
+                    let total_cost = value.calculate_price();
+                    if self.money >= total_cost {
+                        println!("Thank you for eating here, please come again")
+                    } else {
+                        println!("Get out!")
+                    }
+                }
+            },
+            None => println!("You have not ordered any food")
+            
         }
     }
 }

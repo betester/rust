@@ -14,7 +14,7 @@ fn main() {
 
 fn create_customer() {
     let mut username = String::new();
-
+    let mut money : f32;
 }
 
 fn create_chef() {
