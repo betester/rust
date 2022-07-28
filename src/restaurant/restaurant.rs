@@ -1,6 +1,5 @@
-use std::collections::LinkedList;
 
-use super::{customer::{Customer, self}, menu::Menu, chef::Chef, food::Food};
+use super::{customer::{Customer}, menu::Menu, chef::Chef, food::Food};
 
 pub struct Restaurant<'a> {
     pub name : String,
@@ -40,7 +39,6 @@ impl<'a> Restaurant<'a> {
     }
 
     pub fn remove_chefs(&mut self, chef_id : u32) {
-        // self.chefs.remove(chef_id as usize);
         match self.get_chef_by_id(chef_id) {
             Ok(chef) => {self.chefs.remove(chef);},
             Err(err_msg) => println!("{}",err_msg)
@@ -65,13 +63,17 @@ impl<'a> Restaurant<'a> {
         return Err("Customer cannot be found".to_string());
     }
 
-    pub fn handle_order() {
-        
+    pub fn handle_order(&mut self, 
+                        customer : &mut Customer, 
+                        ordered_food_name : &[String]) {
+        for food_name in ordered_food_name {
+            customer.order_menu(food_name, &self.menu);
+        }
     }
 
 
     pub fn is_visitable(&self) -> bool {
-        false
+        true
     }
 
 

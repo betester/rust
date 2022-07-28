@@ -10,10 +10,13 @@ pub struct Customer<'a> {
 }
 
 impl<'a> Customer<'a> {
-    pub fn order_menu(&mut self, food_name: String, menu: Menu) {
+    pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
         if self.order.is_food_ordered(&food_name) {
             match menu.get_food_by_name(food_name) {
-                Some(i) => self.order.add_food(i.clone()),
+                Some(i) => {
+                    self.order.add_food(i.clone());
+                    println!("{} has been ordered by {}",food_name,&self.username);
+                },
                 None => println!("There are no such food"),
             }
         }
