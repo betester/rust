@@ -61,7 +61,10 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     println!("Restaurant created!");
 }
 
-pub fn get_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
+pub fn get_restaurant(
+    restaurants: &mut HashMap<String, Restaurant>,
+    chefs: &mut HashMap<u32, Chef>,
+) {
     let mut restaurant_name = String::new();
 
     println!("Insert the restaurant name: ");
@@ -81,31 +84,34 @@ pub fn get_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
             println!("available seats: {}", value.available_seats);
             println!("chefs: {:?}", value.chefs);
             println!("chefs: {:?}", value.menu);
-
-            loop {
-                println!("What do you want to do?: (insert number)");
-                println!("1. Add food menu");
-                println!("2. Add chef");
-                println!("3. Remove chef");
-                println!("4. Done");
-
-                let mut user_input = String::new();
-
-                io::stdin()
-                    .read_line(&mut user_input)
-                    .expect("Failed to read input");
-                let user_input = user_input.trim().parse().expect("Please enter a number");
-
-                match user_input {
-                    1 => add_food_menu(value),
-                    _ => break,
-                }
-            }
+            restaurant_detail_query(value, chefs);
         }
         None => {
             println!("Cannot find the restaurant, please try again")
         }
     };
+}
+
+pub fn restaurant_detail_query(restaurant: &mut Restaurant, chefs: &mut HashMap<u32, Chef>) {
+    loop {
+        println!("What do you want to do?: (insert number)");
+        println!("1. Add food menu");
+        println!("2. Add chef");
+        println!("3. Remove chef");
+        println!("4. Done");
+
+        let mut user_input = String::new();
+
+        io::stdin()
+            .read_line(&mut user_input)
+            .expect("Failed to read input");
+        let user_input = user_input.trim().parse().expect("Please enter a number");
+
+        match user_input {
+            1 => add_food_menu(restaurant),
+            _ => break,
+        }
+    }
 }
 
 pub fn add_food_menu(restaurant: &mut Restaurant) {
@@ -153,7 +159,6 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
             .expect("Failed to read input");
 
         let food_type = food_type.trim().parse().expect("please input a number");
-
 
         match food_type {
             1 => {

@@ -63,5 +63,5 @@ pub fn pay() {
 }
 
 pub fn leave_restaurant() {
-    
+
 }
