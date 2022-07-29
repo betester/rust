@@ -1,14 +1,14 @@
 use std::path::Iter;
 
-use super::{food::Food, food_status::FoodStatus, customer::Customer};
+use super::{food::Food, food_status::FoodStatus};
 #[derive(Debug)]
-pub struct Order<'a> {
+pub struct Order {
     // TODO: for efficient implementation, use avl tree
     pub ordered_food: Vec<Food>,
-    pub customer : &'a Customer<'a>
+    pub customer : String
 }
 
-impl<'a> Order<'a> {
+impl Order {
     pub fn add_food(&mut self, food: Food) {
         if !self.ordered_food.contains(&food) {
             self.ordered_food.push(food);
@@ -39,7 +39,7 @@ impl<'a> Order<'a> {
     }
 
     pub fn notify_customer(&self,cooked_food : &mut Food) {
-        self.customer.eat(cooked_food);
+        // TODO
     }
 
     pub fn calculate_price(&self) -> f32 {
