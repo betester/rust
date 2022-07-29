@@ -18,7 +18,9 @@ impl Customer {
     }
 
     pub fn order_food(&self, food_name : &String, menu : &Menu , order : &mut Order) {
-        menu.handle_order(food_name,order);
+        menu.handle_order(food_name,order,&self.money);
+        println!("Your current money after buying : {}",&self.money - order.calculate_price());
+        order.print_ordered_food();
     }
 
     pub fn is_visiting_restaurant(&self) -> bool {

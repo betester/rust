@@ -43,6 +43,12 @@ impl Order {
         // TODO
     }
 
+    pub fn print_ordered_food(&self) {
+        for index in 0..self.ordered_food.len() {
+            println!("{}. {}",index + 1,&self.ordered_food.get(index).unwrap().name);
+        }
+    }
+
     pub fn calculate_price(&self) -> f32 {
         let mut price: f32 = 0.0;
         let mut ordered_food_iterator = self.ordered_food.iter().peekable();

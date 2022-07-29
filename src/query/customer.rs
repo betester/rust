@@ -1,7 +1,9 @@
 use std::collections::HashMap;
 
 use crate::{
-    restaurant::{customer::Customer, food::Food, order::Order, restaurant::Restaurant, chef::Chef},
+    restaurant::{
+        chef::Chef, customer::Customer, food::Food, order::Order, restaurant::Restaurant,
+    },
     utils::input::{input_number, input_str},
 };
 
@@ -41,7 +43,7 @@ pub fn get_customer(
     match customer {
         Some(value) => {
             println!("{}", value.to_string());
-            customer_detail_query(value, restaurants,chefs);
+            customer_detail_query(value, restaurants, chefs);
         }
         None => {
             println!("Cannot find the customer, please try again")
@@ -66,7 +68,7 @@ pub fn customer_detail_query(
         let user_input: u8 = input_number(&mut user_input);
 
         match user_input {
-            1 => order_food(customer, restaurants,chefs),
+            1 => order_food(customer, restaurants, chefs),
             2 => visit_restaurant(customer, restaurants),
             3 => pay(),
             4 => leave_restaurant(),
@@ -74,7 +76,7 @@ pub fn customer_detail_query(
         }
     }
 }
-
+// TODO: refactor to make it shorter
 pub fn order_food(
     customer: &mut Customer,
     restaurants: &mut HashMap<String, Restaurant>,
@@ -87,27 +89,32 @@ pub fn order_food(
         };
         let restaurant_name = customer.visiting_restaurant.as_ref().unwrap();
         let restaurant = restaurants.get_mut(restaurant_name).unwrap();
-        
+
         loop {
             let mut food_name = String::new();
             println!("Please enter the food name that you wanted to eat:");
             input_str(&mut food_name);
             let menu = &restaurant.menu;
             customer.order_food(&food_name, &menu, &mut new_order);
-            
+
             println!("do you wish to add more order?");
             println!("1. Yes");
             println!("2. No");
             let mut add_order = String::new();
-            let add_order : u8 = input_number(&mut add_order);
+            let add_order: u8 = input_number(&mut add_order);
 
             match add_order {
                 1 => continue,
                 2 => break,
-                _ => break
+                _ => break,
             }
+
+            // TODO: get all the food that has been ordered
+            // Select which food to remove
+            // do this untill the money is not negative
+            // Ada bug tetap ditambah ordernya
         }
-        
+
         restaurant.handle_order(customer, new_order, chefs)
     } else {
         println!("You are currently not visiting any restaurant");
