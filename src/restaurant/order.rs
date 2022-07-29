@@ -1,23 +1,26 @@
 use std::path::Iter;
 
-use super::{food::Food, food_status::FoodStatus};
+use super::{food::Food, food_status::FoodStatus, menu::Menu};
 #[derive(Debug)]
 pub struct Order {
     // TODO: for efficient implementation, use avl tree
     pub ordered_food: Vec<Food>,
-    pub customer : String
+    pub customer: String,
 }
 
 impl Order {
-    pub fn add_food(&mut self, food: Food) {
-        if !self.ordered_food.contains(&food) {
-            self.ordered_food.push(food);
+    pub fn add_food(&mut self, food_name: &String, menu: &Menu) {
+        if !self.is_food_ordered(food_name) {
+            match menu.get_food_by_name(food_name) {
+                Some(i) => {
+                    self.ordered_food.push(i.clone());
+                }
+                None => println!("There are no such food"),
+            }
         }
     }
 
-
-
-    pub fn remove_food(&mut self, food:  Food) {
+    pub fn remove_food(&mut self, food: Food) {
         match self.ordered_food.iter().position(|x| x == &food) {
             Some(index) => {
                 self.ordered_food.remove(index);
@@ -28,7 +31,7 @@ impl Order {
         }
     }
 
-    pub fn is_food_ordered(&self, food_name : &String) -> bool{
+    pub fn is_food_ordered(&self, food_name: &String) -> bool {
         for food in &self.ordered_food {
             if &food.name == food_name {
                 return true;
@@ -38,7 +41,7 @@ impl Order {
         return false;
     }
 
-    pub fn notify_customer(&self,cooked_food : &mut Food) {
+    pub fn notify_customer(&self, cooked_food: &mut Food) {
         // TODO
     }
 

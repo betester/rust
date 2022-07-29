@@ -65,8 +65,11 @@ impl Restaurant {
 
     pub fn handle_order(&mut self, 
                         customer : &mut Customer, 
-                        ordered_food_name : &[String]) {
+                        food_name : String) {
         // TODO;
+        // create order from customer
+        // notify the chefs
+        customer.order_menu(&food_name, &self.menu);
     }
 
 

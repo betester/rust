@@ -1,15 +1,18 @@
 use parse_duration::parse;
 use std::{collections::HashMap, io, str::FromStr};
 
-use crate::{restaurant::{
-    chef::Chef,
-    customer::Customer,
-    food::Food,
-    food_status::FoodStatus,
-    food_type::{self, FoodType},
-    menu::Menu,
-    restaurant::Restaurant,
-}, utils::input::{input_str, input_number}};
+use crate::{
+    restaurant::{
+        chef::Chef,
+        customer::Customer,
+        food::Food,
+        food_status::FoodStatus,
+        food_type::{self, FoodType},
+        menu::Menu,
+        restaurant::Restaurant,
+    },
+    utils::input::{input_number, input_str},
+};
 
 pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let mut name = String::new();
@@ -86,7 +89,7 @@ pub fn restaurant_detail_query(restaurant: &mut Restaurant, chefs: &mut HashMap<
 
         let mut user_input = String::new();
 
-        let user_input =  input_number(&mut user_input);
+        let user_input = input_number(&mut user_input);
 
         match user_input {
             1 => add_food_menu(restaurant),
@@ -108,7 +111,6 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
 
     println!("Please enter the food price: (in number) ");
     let price = input_number::<f32>(&mut name);
-
 
     println!("Please enter the cooking time estimation: (in hour, minute, or second) ");
     io::stdin()
@@ -169,8 +171,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     println!("food has been added!");
 }
 
-
-pub fn add_chef(restaurant:  &mut Restaurant, chefs:  &mut HashMap<u32, Chef>) {
+pub fn add_chef(restaurant: &mut Restaurant, chefs: &mut HashMap<u32, Chef>) {
     let mut chef_id = String::new();
     let chef_id = input_number(&mut chef_id);
     chefs.get(&chef_id).unwrap();
@@ -178,6 +179,10 @@ pub fn add_chef(restaurant:  &mut Restaurant, chefs:  &mut HashMap<u32, Chef>) {
     restaurant.add_chefs(chef_id);
 }
 
-pub fn remove_chef(restaurant:  &mut Restaurant) {
-    
+pub fn remove_chef(restaurant: &mut Restaurant) {
+    let mut chef_id = String::new();
+    let chef_id = input_number::<u32>(&mut chef_id);
+    restaurant.remove_chefs(chef_id);
+
+    println!("chef has been fired :( ");
 }

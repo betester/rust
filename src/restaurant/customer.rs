@@ -1,8 +1,8 @@
-use super::{food_status::FoodStatus, menu::Menu, order::Order, food::Food};
+use super::{food::Food, food_status::FoodStatus, menu::Menu, order::Order};
 use std::thread;
 #[derive(Debug)]
 pub struct Customer {
-    pub username : String,
+    pub username: String,
     pub money: f32,
     pub visiting_restaurant: Option<String>,
     pub order: Option<Order>,
@@ -10,23 +10,20 @@ pub struct Customer {
 
 impl Customer {
     pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
-        
         match &mut self.order {
             Some(value) => {
-                if value.is_food_ordered(&food_name) {
-                    match menu.get_food_by_name(food_name) {
-                        Some(i) => {
-                            value.add_food(i.clone());
-                            println!("{} has been ordered by {}",food_name,&self.username);
-                        },
-                        None => println!("There are no such food"),
-                    }
-                }
-            },
-            None => println!("No order has been created")
+                value.add_food(food_name, menu);
+                println!("{} has been ordered by {}", food_name, &self.username);
+            }
+            None => {
+                let new_order = Order {
+                    ordered_food: Vec::<Food>::new(),
+                    customer: self.username.clone(),
+                };
+                self.order = Some(new_order);
+                self.order_menu(food_name, menu);
+            }
         }
-
-    
     }
 
     pub fn visit_restaurant(&mut self, restaurant: String) {
@@ -64,9 +61,8 @@ impl Customer {
                         println!("Get out!")
                     }
                 }
-            },
-            None => println!("You have not ordered any food")
-            
+            }
+            None => println!("You have not ordered any food"),
         }
     }
 }
