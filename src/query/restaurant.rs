@@ -9,7 +9,7 @@ use crate::{restaurant::{
     food_type::{self, FoodType},
     menu::Menu,
     restaurant::Restaurant,
-}, utils::input::{input_str, input_int}};
+}, utils::input::{input_str, input_number}};
 
 pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let mut name = String::new();
@@ -28,10 +28,10 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     input_str(&mut adress);
 
     println!("please insert the rating of the restaurant");
-    let rating = input_int::<u8>(&mut rating);
+    let rating = input_number::<u8>(&mut rating);
 
     println!("please insert the available seats of the restaurant");
-    let available_seats = input_int::<usize>(&mut available_seats);
+    let available_seats = input_number::<usize>(&mut available_seats);
 
     let new_restaurant = Restaurant {
         name,
@@ -86,7 +86,7 @@ pub fn restaurant_detail_query(restaurant: &mut Restaurant, chefs: &mut HashMap<
 
         let mut user_input = String::new();
 
-        let user_input =  input_int(&mut user_input);
+        let user_input =  input_number(&mut user_input);
 
         match user_input {
             1 => add_food_menu(restaurant),
@@ -107,7 +107,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     input_str(&mut name);
 
     println!("Please enter the food price: (in number) ");
-    let price = input_int::<f32>(&mut name);
+    let price = input_number::<f32>(&mut name);
 
 
     println!("Please enter the cooking time estimation: (in hour, minute, or second) ");
@@ -172,7 +172,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
 
 pub fn add_chef(restaurant:  &mut Restaurant, chefs:  &mut HashMap<u32, Chef>) {
     let mut chef_id = String::new();
-    let chef_id = input_int(&mut chef_id);
+    let chef_id = input_number(&mut chef_id);
     chefs.get(&chef_id).unwrap();
 
     restaurant.add_chefs(chef_id);

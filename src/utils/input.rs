@@ -5,7 +5,7 @@ pub fn input_str(input : &mut String) {
 }
 
 
-pub fn input_int<T : FromStr>(input : &mut String) -> T where T : FromStr {
+pub fn input_number<T : FromStr>(input : &mut String) -> T where T : FromStr {
     input_str(input);
     match input.trim().parse() {
         Ok(value) => value,
