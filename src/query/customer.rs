@@ -65,7 +65,7 @@ pub fn customer_detail_query(
 
         match user_input {
             1 => order_food(customer, restaurants),
-            2 => visit_restaurant(),
+            2 => visit_restaurant(customer, restaurants),
             3 => pay(),
             4 => leave_restaurant(),
             _ => break,
@@ -86,7 +86,18 @@ pub fn order_food(customer: &mut Customer, restaurants: &mut HashMap<String, Res
     }
 }
 
-pub fn visit_restaurant() {}
+pub fn visit_restaurant(customer: &mut Customer,restaurants: &mut HashMap<String, Restaurant>) {
+    println!("Please enter the restaurant name");
+    let mut restaurant_name = String::new();
+    input_str(&mut restaurant_name);
+    match restaurants.get(&restaurant_name) {
+        restaurant => {
+            println!("You visited {}!",&restaurant_name);
+            customer.visiting_restaurant = Some(restaurant_name);
+        }
+        _ => (println!("The restaurant cannot be found, please try again.")),
+    }
+}
 
 pub fn pay() {}
 
