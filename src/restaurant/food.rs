@@ -1,4 +1,4 @@
-use std::time::{self, Duration};
+use std::time::{ Duration};
 
 use super::{food_type::FoodType, food_status::FoodStatus};
 #[derive(Clone)]

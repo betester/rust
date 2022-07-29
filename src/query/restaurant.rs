@@ -1,13 +1,12 @@
 use parse_duration::parse;
-use std::{collections::HashMap, io, str::FromStr};
+use std::{collections::HashMap, io};
 
 use crate::{
     restaurant::{
         chef::Chef,
-        customer::Customer,
         food::Food,
         food_status::FoodStatus,
-        food_type::{self, FoodType},
+        food_type::{FoodType},
         menu::Menu,
         restaurant::Restaurant,
     },

@@ -36,7 +36,7 @@ impl Customer {
 
     pub fn is_visiting_restaurant(&self) -> bool {
         match &self.visiting_restaurant {
-            Some(current_visiting) => true,
+            Some(_) => true,
             None => false,
         }
     }

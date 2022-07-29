@@ -1,4 +1,4 @@
-use std::{collections::HashMap, io};
+use std::{collections::HashMap};
 
 use crate::{
     restaurant::{customer::Customer, restaurant::Restaurant},

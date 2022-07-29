@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::io;
 
 use restaurant::{ restaurant::Restaurant};
 

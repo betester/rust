@@ -24,8 +24,8 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     println!("3. Landfood");
     println!("4. Done");
 
-    for i in 0..MAX_SPECIALTIES {
-        let mut specialty_input = String::new();
+    for _ in 0..MAX_SPECIALTIES {
+        let specialty_input = String::new();
 
         io::stdin()
             .read_line(&mut max_order_taken)
@@ -40,7 +40,7 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
             2 => food_specialties.push(FoodType::AirFood),
             3 => food_specialties.push(FoodType::LandFood),
             4 => break,
-            other => {
+            _ => {
                 println!("invalid input")
             }
         }
@@ -63,7 +63,6 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     println!("Chef created!");
 }
 
-
 pub fn get_chef(chefs: &mut HashMap<u32, Chef>) {
     println!("Insert the chef name: ");
 
@@ -78,7 +77,7 @@ pub fn get_chef(chefs: &mut HashMap<u32, Chef>) {
     let chef = chefs.get(&chef_id);
 
     match chef {
-        Some(value) => {
+        Some(_) => {
             println!("here are the chef json {:?}", chef)
         }
         None => {
