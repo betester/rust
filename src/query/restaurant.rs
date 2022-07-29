@@ -1,5 +1,5 @@
 use parse_duration::parse;
-use std::{collections::HashMap, io};
+use std::{collections::HashMap, io, str::FromStr};
 
 use crate::restaurant::{
     chef::Chef,
@@ -109,6 +109,8 @@ pub fn restaurant_detail_query(restaurant: &mut Restaurant, chefs: &mut HashMap<
 
         match user_input {
             1 => add_food_menu(restaurant),
+            2 => add_chef(restaurant, chefs),
+            3 => remove_chef(restaurant),
             _ => break,
         }
     }
@@ -192,15 +194,18 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     println!("food has been added!");
 }
 
-pub fn add_chef(restaurant:  &mut Restaurant, chefs:  HashMap<u32, Chef>) {
+
+pub fn add_chef(restaurant:  &mut Restaurant, chefs:  &mut HashMap<u32, Chef>) {
     let mut chef_id = String::new();
 
     io::stdin().read_line(&mut chef_id).expect("Failed to read input");
 
     let chef_id = chef_id.trim().parse().expect("Please insert a number");
-    let chef = chefs.get(&chef_id).unwrap();
+    chefs.get(&chef_id).unwrap();
 
     restaurant.add_chefs(chef_id);
 }
 
-pub fn remove_chef() {}
+pub fn remove_chef(restaurant:  &mut Restaurant) {
+    
+}

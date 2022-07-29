@@ -7,6 +7,7 @@ use crate::{restaurant::{chef::Chef, customer::Customer}, query::{restaurant::{c
 
 pub mod restaurant;
 pub mod query;
+pub mod utils;
 
 fn main() {
     let mut customers = HashMap::<String, Customer>::new();
