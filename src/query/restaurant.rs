@@ -43,7 +43,6 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
         customers,
         chefs,
         menu,
-        orders : Vec::<Order>::new()
     };
 
     restaurants.insert(new_restaurant.name.clone(), new_restaurant);

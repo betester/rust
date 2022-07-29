@@ -9,12 +9,14 @@ pub struct Order {
 }
 
 impl Order {
-    pub fn add_food(&mut self, food: Food) {
-        if !self.is_food_ordered(&food.name) {
+    pub fn add_food(&mut self, food: Food) -> bool {
+        if !self.is_food_ordered(&food.name)  {
             self.ordered_food.push(food);
+            return true;
         }
         else {
             println!("Food is already ordered");
+            return false;
         }
     }
 

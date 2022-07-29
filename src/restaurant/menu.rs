@@ -11,16 +11,20 @@ impl Menu {
         }
     }
 
-    pub fn handle_order(&self, food_name: &String, order: &mut Order, customer_money: &f32) {
+    pub fn handle_order(&self, food_name: &String, order: &mut Order, customer_money: &f32) -> bool {
         match self.get_food_by_name(food_name) {
             Some(food) => {
                 if customer_money - &food.price >= 0. {
-                    order.add_food(food.clone())
+                    return order.add_food(food.clone());
                 } else {
                     println!("Sorry your money is not enough");
+                    return false;
                 }
             }
-            None => println!("The food not on the menu"),
+            None => {
+                println!("The food not on the menu");
+                return false;
+            },
         }
     }
 

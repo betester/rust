@@ -22,6 +22,7 @@ pub fn create_customer(customers: &mut HashMap<String, Customer>) {
         money,
         visiting_restaurant: None,
         order: None,
+        has_taken_order : false
     };
 
     customers.insert(username, new_customer);
@@ -108,14 +109,10 @@ pub fn order_food(
                 2 => break,
                 _ => break,
             }
-
-            // TODO: get all the food that has been ordered
-            // Select which food to remove
-            // do this untill the money is not negative
-            // Ada bug tetap ditambah ordernya
         }
 
-        restaurant.handle_order(customer, new_order, chefs)
+        restaurant.handle_order(customer, &mut new_order, chefs);
+        customer.set_order(new_order);
     } else {
         println!("You are currently not visiting any restaurant");
     }
