@@ -1,4 +1,4 @@
-use super::food::Food;
+use super::{food::Food, order::Order};
 #[derive(Debug)]
 pub struct Menu {
     pub foods: Vec<Food>,
@@ -11,6 +11,12 @@ impl Menu {
         }
     }
 
+    pub fn handle_order(&self, food_name : &String , order : &mut Order) {
+        match self.get_food_by_name(food_name) {
+            Some(food) => order.add_food(food.clone()),
+            None => println!("The food not on the menu")
+        }
+    }
 
     pub fn get_food_by_name(&self, food_name : &String) -> Option<&Food> {
         for food in &self.foods {

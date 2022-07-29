@@ -1,5 +1,5 @@
 
-use super::{food::Food, food_status::FoodStatus, menu::Menu};
+use super::{food::Food, food_status::FoodStatus};
 #[derive(Debug)]
 pub struct Order {
     // TODO: for efficient implementation, use avl tree
@@ -8,14 +8,12 @@ pub struct Order {
 }
 
 impl Order {
-    pub fn add_food(&mut self, food_name: &String, menu: &Menu) {
-        if !self.is_food_ordered(food_name) {
-            match menu.get_food_by_name(food_name) {
-                Some(i) => {
-                    self.ordered_food.push(i.clone());
-                }
-                None => println!("There are no such food"),
-            }
+    pub fn add_food(&mut self, food: Food) {
+        if !self.is_food_ordered(&food.name) {
+            self.ordered_food.push(food);
+        }
+        else {
+            println!("Food is already ordered");
         }
     }
 

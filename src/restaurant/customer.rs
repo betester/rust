@@ -17,21 +17,8 @@ impl Customer {
         )
     }
 
-    pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
-        match &mut self.order {
-            Some(value) => {
-                value.add_food(food_name, menu);
-                println!("{} has been ordered by {}", food_name, &self.username);
-            }
-            None => {
-                let new_order = Order {
-                    ordered_food: Vec::<Food>::new(),
-                    customer: self.username.clone(),
-                };
-                self.order = Some(new_order);
-                self.order_menu(food_name, menu);
-            }
-        }
+    pub fn order_food(&self, food_name : &String, menu : &Menu , order : &mut Order) {
+        menu.handle_order(food_name,order);
     }
 
     pub fn is_visiting_restaurant(&self) -> bool {

@@ -67,20 +67,27 @@ impl Restaurant {
         return Err("Customer cannot be found".to_string());
     }
 
-    pub fn handle_order(&mut self, customer: &mut Customer, food_name: String) {
-        customer.order_menu(&food_name, &self.menu);
-    }
-
-    pub fn notify_chefs(&self, chef_repo: &mut HashMap<u32, Chef>, mut order: Order) {
-        // quite inefficient in implementation
-        // TODO: notify the customer after the food has finished cooking
-        for i in 0..order.ordered_food.len() {
-            let food = order.ordered_food.get_mut(i).unwrap();
-
-            for chef in &self.chefs {
-                match chef_repo.get(chef).unwrap().cook_food(food) {
-                    Ok(_) => break,
-                    Err(err_msg) => println!("{}", err_msg),
+    pub fn handle_order(
+        &self,
+        customer: &mut Customer,
+        order: Order,
+        chefs: &mut HashMap<u32, Chef>,
+    ) {
+        for mut food in order.ordered_food {
+            for chef_id in &self.chefs {
+                match chefs.get(chef_id) {
+                    Some(chef) => match chef.cook_food(&mut food) {
+                        Ok(cooked_food) => {
+                            customer.eat(cooked_food);
+                            break;
+                        }
+                        Err(err_msg) => {
+                            println!("{}", err_msg)
+                        }
+                    },
+                    None => {
+                        // remove the id?
+                    }
                 }
             }
         }
