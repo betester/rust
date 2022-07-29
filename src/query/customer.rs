@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::{
     restaurant::{
-        chef::Chef, customer::Customer, food::Food, order::Order, restaurant::Restaurant,
+        chef::Chef, customer::{Customer, self}, food::Food, order::Order, restaurant::Restaurant,
     },
     utils::input::{input_number, input_str},
 };
@@ -22,7 +22,8 @@ pub fn create_customer(customers: &mut HashMap<String, Customer>) {
         money,
         visiting_restaurant: None,
         order: None,
-        has_taken_order : false
+        has_taken_order : false,
+        has_paid : false
     };
 
     customers.insert(username, new_customer);
@@ -71,8 +72,8 @@ pub fn customer_detail_query(
         match user_input {
             1 => order_food(customer, restaurants, chefs),
             2 => visit_restaurant(customer, restaurants),
-            3 => pay(),
-            4 => leave_restaurant(),
+            3 => pay(customer),
+            4 => leave_restaurant(customer,restaurants),
             _ => break,
         }
     }
@@ -132,6 +133,20 @@ pub fn visit_restaurant(customer: &mut Customer, restaurants: &mut HashMap<Strin
     }
 }
 
-pub fn pay() {}
+pub fn pay(customer: &mut Customer) {
+    customer.pay();
+}
 
-pub fn leave_restaurant() {}
+pub fn leave_restaurant(customer: &mut Customer,restaurants: &mut HashMap<String, Restaurant>) {
+    if customer.leave_restaurant() {
+        match &customer.visiting_restaurant {
+            Some(visited_restaurant) => {
+                let customer_username = &customer.username;
+                let restaurant = restaurants.get_mut(visited_restaurant).unwrap();
+                restaurant.remove_customers(customer_username.to_string());
+                println!("Thank you for visiting, please come again : )");
+            },
+            None => {}
+        }
+    }
+}

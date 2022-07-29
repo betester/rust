@@ -7,6 +7,7 @@ pub struct Customer {
     pub visiting_restaurant: Option<String>,
     pub order: Option<Order>,
     pub has_taken_order: bool,
+    pub has_paid : bool,
 }
 
 impl Customer {
@@ -41,9 +42,20 @@ impl Customer {
         }
     }
 
-    pub fn leave_restaurant(&mut self) {
+    pub fn leave_restaurant(&mut self) -> bool{
         if self.is_visiting_restaurant() {
-            self.visiting_restaurant = None;
+            if self.has_paid  {
+                self.visiting_restaurant = None;
+                return true;
+            }
+            else {
+                println!("You have not paid for the order yet");
+                return false;
+            }
+        }
+        else {
+            println!("You have not visit any restaurant");
+            return false;
         }
     }
 
