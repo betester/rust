@@ -79,10 +79,10 @@ pub fn get_chef(chefs: &mut HashMap<u32, Chef>) {
 
     match chef {
         Some(value) => {
-            println!("here are the customer json {:?}", chef)
+            println!("here are the chef json {:?}", chef)
         }
         None => {
-            println!("Cannot find the customer, please try again")
+            println!("Cannot find the chef, please try again")
         }
     };
 }

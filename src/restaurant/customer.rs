@@ -9,6 +9,13 @@ pub struct Customer {
 }
 
 impl Customer {
+    pub fn to_string(&self) -> String {
+        format!(
+            "username : {}\n money : {} \n visiting_restaurant: {:?} \n order : {:?}",
+            self.username, self.money, self.visiting_restaurant, self.order
+        )
+    }
+
     pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
         match &mut self.order {
             Some(value) => {

@@ -4,7 +4,7 @@ use super::{food::Food, food_status::FoodStatus, menu::Menu};
 #[derive(Debug)]
 pub struct Order {
     // TODO: for efficient implementation, use avl tree
-    pub ordered_food: Vec<Food>,
+    pub ordered_food:  Vec<Food>,
     pub customer: String,
 }
 
@@ -41,7 +41,7 @@ impl Order {
         return false;
     }
 
-    pub fn notify_customer(&self, cooked_food: &mut Food) {
+    pub fn notify_customer(&self, cooked_food: &Food) {
         // TODO
     }
 

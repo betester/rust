@@ -1,22 +1,16 @@
 use std::{collections::HashMap, io};
 
-use crate::restaurant::customer::Customer;
+use crate::{restaurant::customer::Customer, utils::input::{input_str, input_number}};
 
 pub fn create_customer(customers: &mut HashMap<String, Customer>) {
     let mut username = String::new();
     let mut money = String::new();
 
     println!("please insert the username: ");
-    io::stdin()
-        .read_line(&mut username)
-        .expect("Failed to read input");
+    input_str(&mut username);
 
     println!("please insert the amount of money : ");
-    io::stdin()
-        .read_line(&mut money)
-        .expect("Failed to read input");
-
-    let money: f32 = money.trim().parse().expect("Please input a number");
+    let money :f32 = input_number(&mut money);
 
     let new_customer = Customer {
         username: username.clone(),
@@ -33,21 +27,23 @@ pub fn get_customer(customers: &mut HashMap<String, Customer>) {
     println!("Insert the customer name: ");
 
     let mut customer_username = String::new();
-
-    io::stdin()
-        .read_line(&mut customer_username)
-        .expect("Failed to read input");
+    input_str(&mut customer_username);
 
     let customer = customers.get(&customer_username);
 
     match customer {
         Some(value) => {
-            println!("here are the customer json {:?}", customer)
+            println!("{}", value.to_string());
+
         }
         None => {
             println!("Cannot find the customer, please try again")
         }
     };
+}
+
+pub fn customer_detail_query() {
+    
 }
 
 pub fn order_food() {
