@@ -4,6 +4,7 @@ pub fn input_str(input : &mut String) {
     io::stdin().read_line(input).expect("Failed to read input");
 }
 
+
 pub fn input_int<T : FromStr>(input : &mut String) -> T where T : FromStr {
     input_str(input);
     match input.trim().parse() {

@@ -1,7 +1,7 @@
 use parse_duration::parse;
 use std::{collections::HashMap, io, str::FromStr};
 
-use crate::restaurant::{
+use crate::{restaurant::{
     chef::Chef,
     customer::Customer,
     food::Food,
@@ -9,7 +9,7 @@ use crate::restaurant::{
     food_type::{self, FoodType},
     menu::Menu,
     restaurant::Restaurant,
-};
+}, utils::input::{input_str, input_int}};
 
 pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let mut name = String::new();
@@ -22,30 +22,16 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let menu = Menu { foods };
 
     println!("please insert the name of the restaurant");
-    io::stdin()
-        .read_line(&mut name)
-        .expect("Failed to read input");
+    input_str(&mut name);
 
     println!("please insert the adress of the restaurant");
-    io::stdin()
-        .read_line(&mut adress)
-        .expect("Failed to read input");
+    input_str(&mut adress);
 
     println!("please insert the rating of the restaurant");
-    io::stdin()
-        .read_line(&mut rating)
-        .expect("Failed to read input");
+    let rating = input_int::<u8>(&mut rating);
 
     println!("please insert the available seats of the restaurant");
-    io::stdin()
-        .read_line(&mut available_seats)
-        .expect("Failed to read input");
-
-    let rating: u8 = rating.trim().parse().expect("Please input a number");
-    let available_seats: usize = available_seats
-        .trim()
-        .parse()
-        .expect("Please input a number");
+    let available_seats = input_int::<usize>(&mut available_seats);
 
     let new_restaurant = Restaurant {
         name,
@@ -69,9 +55,7 @@ pub fn get_restaurant(
 
     println!("Insert the restaurant name: ");
 
-    io::stdin()
-        .read_line(&mut restaurant_name)
-        .expect("Failed to read input");
+    input_str(&mut restaurant_name);
 
     let restaurant = restaurants.get_mut(&restaurant_name);
 
@@ -102,10 +86,7 @@ pub fn restaurant_detail_query(restaurant: &mut Restaurant, chefs: &mut HashMap<
 
         let mut user_input = String::new();
 
-        io::stdin()
-            .read_line(&mut user_input)
-            .expect("Failed to read input");
-        let user_input = user_input.trim().parse().expect("Please enter a number");
+        let user_input =  input_int(&mut user_input);
 
         match user_input {
             1 => add_food_menu(restaurant),
@@ -123,14 +104,11 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     let mut eating_time_estimation = String::new();
 
     println!("Please enter the food name: ");
-    io::stdin()
-        .read_line(&mut name)
-        .expect("Failed to read input");
+    input_str(&mut name);
 
     println!("Please enter the food price: (in number) ");
-    io::stdin()
-        .read_line(&mut price)
-        .expect("Failed to read input");
+    let price = input_int::<f32>(&mut name);
+
 
     println!("Please enter the cooking time estimation: (in hour, minute, or second) ");
     io::stdin()
@@ -142,7 +120,6 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
         .read_line(&mut eating_time_estimation)
         .expect("Failed to read input");
 
-    let price: f32 = price.trim().parse().expect("Please input a number");
     let cooking_time_estimation = parse(&cooking_time_estimation).unwrap().into();
     let eating_time_estimation = parse(&eating_time_estimation).unwrap().into();
 
@@ -156,9 +133,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
         println!("2. Airfood");
         println!("3. Landfood");
 
-        io::stdin()
-            .read_line(&mut food_type)
-            .expect("Failed to read input");
+        input_str(&mut food_type);
 
         let food_type = food_type.trim().parse().expect("please input a number");
 
@@ -197,10 +172,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
 
 pub fn add_chef(restaurant:  &mut Restaurant, chefs:  &mut HashMap<u32, Chef>) {
     let mut chef_id = String::new();
-
-    io::stdin().read_line(&mut chef_id).expect("Failed to read input");
-
-    let chef_id = chef_id.trim().parse().expect("Please insert a number");
+    let chef_id = input_int(&mut chef_id);
     chefs.get(&chef_id).unwrap();
 
     restaurant.add_chefs(chef_id);
