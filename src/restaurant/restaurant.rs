@@ -1,17 +1,17 @@
 
 use super::{customer::{Customer}, menu::Menu, chef::Chef, food::Food};
 #[derive(Debug)]
-pub struct Restaurant<'a> {
+pub struct Restaurant {
     pub name : String,
     pub adress : String,
     pub rating : u8,
     pub available_seats : usize,
-    pub customers : Vec<&'a Customer<'a>>,
-    pub chefs : Vec<&'a Chef>,
+    pub customers : Vec<String>,
+    pub chefs : Vec<u32>,
     pub menu : Menu,
 }
 
-impl<'a> Restaurant<'a> {
+impl Restaurant {
 
     pub fn add_food_menu(&mut self,food: Food) {
         self.menu.add_food(food);
@@ -21,7 +21,7 @@ impl<'a> Restaurant<'a> {
         self.menu.remove_food(food)
     }
 
-    pub fn add_customers(&mut self, customer : &'a Customer<'a>) {
+    pub fn add_customers(&mut self, customer : String) {
         if self.is_visitable() {
             self.customers.push(customer);
         }
@@ -34,7 +34,7 @@ impl<'a> Restaurant<'a> {
         }
     }
 
-    pub fn add_chefs(&mut self, chef : &'a Chef) {
+    pub fn add_chefs(&mut self, chef : u32) {
         self.chefs.push(chef);
     }
 
@@ -47,7 +47,7 @@ impl<'a> Restaurant<'a> {
 
     pub fn get_chef_by_id(&self, chef_id : u32 ) -> Result<usize,String> {
         for index in 0..self.chefs.len() {
-            if self.chefs.get(index).unwrap().chef_id == chef_id {
+            if self.chefs.get(index).unwrap() == &chef_id {
                 return Ok(index);
             }
         }
@@ -56,7 +56,7 @@ impl<'a> Restaurant<'a> {
 
     pub fn get_customer_by_username(&self, username : String) -> Result<usize,String> {
         for index in 0..self.customers.len() {
-            if self.customers.get(index).unwrap().username == username {
+            if self.customers.get(index).unwrap() == &username {
                 return Ok(index);
             }
         }
@@ -66,9 +66,7 @@ impl<'a> Restaurant<'a> {
     pub fn handle_order(&mut self, 
                         customer : &mut Customer, 
                         ordered_food_name : &[String]) {
-        for food_name in ordered_food_name {
-            customer.order_menu(food_name, &self.menu);
-        }
+        // TODO;
     }
 
 

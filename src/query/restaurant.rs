@@ -16,8 +16,8 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
     let mut adress = String::new();
     let mut rating = String::new();
     let mut available_seats = String::new();
-    let customers = Vec::<&Customer>::new();
-    let chefs = Vec::<&Chef>::new();
+    let customers = Vec::<String>::new();
+    let chefs = Vec::<u32>::new();
     let foods = Vec::<Food>::new();
     let menu = Menu { foods };
 
@@ -192,7 +192,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     println!("food has been added!");
 }
 
-pub fn add_chef<'a>(restaurant: &'a mut Restaurant<'a>, chefs:  HashMap<u32, &'a Chef>) {
+pub fn add_chef(restaurant:  &mut Restaurant, chefs:  HashMap<u32, Chef>) {
     let mut chef_id = String::new();
 
     io::stdin().read_line(&mut chef_id).expect("Failed to read input");
@@ -200,7 +200,7 @@ pub fn add_chef<'a>(restaurant: &'a mut Restaurant<'a>, chefs:  HashMap<u32, &'a
     let chef_id = chef_id.trim().parse().expect("Please insert a number");
     let chef = chefs.get(&chef_id).unwrap();
 
-    restaurant.add_chefs(chef);
+    restaurant.add_chefs(chef_id);
 }
 
 pub fn remove_chef() {}

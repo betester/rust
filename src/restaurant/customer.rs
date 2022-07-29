@@ -1,14 +1,14 @@
-use super::{food_status::FoodStatus, menu::Menu, order::Order, restaurant::Restaurant, food::Food};
+use super::{food_status::FoodStatus, menu::Menu, order::Order, food::Food};
 use std::thread;
 #[derive(Debug)]
-pub struct Customer<'a> {
+pub struct Customer {
     pub username : String,
     pub money: f32,
-    pub visiting_restaurant: Option<&'a Restaurant<'a>>,
-    pub order: Option<Order<'a>>,
+    pub visiting_restaurant: Option<String>,
+    pub order: Option<Order>,
 }
 
-impl<'a> Customer<'a> {
+impl Customer {
     pub fn order_menu(&mut self, food_name: &String, menu: &Menu) {
         
         match &mut self.order {
@@ -29,17 +29,17 @@ impl<'a> Customer<'a> {
     
     }
 
-    pub fn visit_restaurant(&mut self, restaurant: &'a Restaurant) {
-        match self.visiting_restaurant {
+    pub fn visit_restaurant(&mut self, restaurant: String) {
+        match &self.visiting_restaurant {
             Some(visited_restaurant) => {
-                println!("You are currently visiting {}", visited_restaurant.name)
+                println!("You are currently visiting {}", visited_restaurant)
             }
             None => self.visiting_restaurant = Some(restaurant),
         }
     }
 
     pub fn leave_restaurant(&mut self) {
-        match self.visiting_restaurant {
+        match &self.visiting_restaurant {
             Some(visited_restaurant) => self.visiting_restaurant = None,
             None => println!("You are not visiting any restaurant"),
         }
