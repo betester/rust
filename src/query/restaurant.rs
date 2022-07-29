@@ -8,7 +8,7 @@ use crate::{
         food_status::FoodStatus,
         food_type::{FoodType},
         menu::Menu,
-        restaurant::Restaurant,
+        restaurant::Restaurant, order::Order,
     },
     utils::input::{input_number, input_str},
 };
@@ -43,6 +43,7 @@ pub fn create_restaurant(restaurants: &mut HashMap<String, Restaurant>) {
         customers,
         chefs,
         menu,
+        orders : Vec::<Order>::new()
     };
 
     restaurants.insert(new_restaurant.name.clone(), new_restaurant);
@@ -172,6 +173,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
 
 pub fn add_chef(restaurant: &mut Restaurant, chefs: &mut HashMap<u32, Chef>) {
     let mut chef_id = String::new();
+    println!("Enter chef id : (in number )");
     let chef_id = input_number(&mut chef_id);
     chefs.get(&chef_id).unwrap();
 

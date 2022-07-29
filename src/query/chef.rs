@@ -1,6 +1,6 @@
 use std::{collections::HashMap, io};
 
-use crate::restaurant::{chef::Chef, food_type::FoodType};
+use crate::{restaurant::{chef::Chef, food_type::FoodType}, utils::input::input_number};
 
 pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     const MAX_SPECIALTIES: u32 = 3;
@@ -8,15 +8,11 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     let mut food_specialties = Vec::<FoodType>::new();
     let mut max_order_taken = String::new();
 
-    println!("please insert the chef id (it has to be unique");
-    io::stdin()
-        .read_line(&mut chef_id)
-        .expect("Failed to read input");
+    println!("please insert the chef id (it has to be unique)");
+    let chef_id = input_number(&mut chef_id);
 
     println!("please insert the amount of order that the chef can take");
-    io::stdin()
-        .read_line(&mut max_order_taken)
-        .expect("Failed to read input");
+    let max_order_taken = input_number(&mut max_order_taken);
 
     println!("Please select three of the specialty that the chef can have (insert number)");
     println!("1. Seafood");
@@ -25,16 +21,9 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
     println!("4. Done");
 
     for _ in 0..MAX_SPECIALTIES {
-        let specialty_input = String::new();
+        let mut specialty_input = String::new();
+        let specialty_input = input_number(&mut specialty_input);
 
-        io::stdin()
-            .read_line(&mut max_order_taken)
-            .expect("Failed to read input");
-
-        let specialty_input: u32 = specialty_input
-            .trim()
-            .parse()
-            .expect("Please input a number");
         match specialty_input {
             1 => food_specialties.push(FoodType::SeaFood),
             2 => food_specialties.push(FoodType::AirFood),
@@ -45,13 +34,7 @@ pub fn create_chef(chefs: &mut HashMap<u32, Chef>) {
             }
         }
     }
-
-    let chef_id: u32 = chef_id.trim().parse().expect("Please input a number");
-    let max_order_taken: u32 = max_order_taken
-        .trim()
-        .parse()
-        .expect("Please input a number");
-
+    
     let new_chef = Chef {
         chef_id,
         food_specialties,

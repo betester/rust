@@ -1,6 +1,7 @@
 
 use super::{food::Food, food_status::FoodStatus};
 #[derive(Debug)]
+#[derive(Clone)]
 pub struct Order {
     // TODO: for efficient implementation, use avl tree
     pub ordered_food:  Vec<Food>,

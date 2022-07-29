@@ -86,7 +86,7 @@ pub fn order_food(
             customer: customer.username.clone(),
         };
         let restaurant_name = customer.visiting_restaurant.as_ref().unwrap();
-        let restaurant = restaurants.get(restaurant_name).unwrap();
+        let restaurant = restaurants.get_mut(restaurant_name).unwrap();
         
         loop {
             let mut food_name = String::new();
@@ -118,10 +118,11 @@ pub fn visit_restaurant(customer: &mut Customer, restaurants: &mut HashMap<Strin
     println!("Please enter the restaurant name");
     let mut restaurant_name = String::new();
     input_str(&mut restaurant_name);
-    match restaurants.get(&restaurant_name) {
+    match restaurants.get_mut(&restaurant_name) {
         restaurant => {
             println!("You visited {}!", &restaurant_name);
             customer.visiting_restaurant = Some(restaurant_name);
+            restaurant.unwrap().add_customers(customer.username.clone());
         }
         _ => (println!("The restaurant cannot be found, please try again.")),
     }

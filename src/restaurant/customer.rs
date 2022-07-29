@@ -44,6 +44,7 @@ impl Customer {
         // need to use observer pattern to know when the food is cooked
         if food.status == FoodStatus::COOKED {
             thread::sleep(food.cooking_time_estimation);
+            println!("{} has finished eating the food",&self.username);
             food.status = FoodStatus::EATEN;
         }
     }

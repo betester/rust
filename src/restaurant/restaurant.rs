@@ -10,6 +10,7 @@ pub struct Restaurant {
     pub customers: Vec<String>,
     pub chefs: Vec<u32>,
     pub menu: Menu,
+    pub orders : Vec<Order>
 }
 
 impl Restaurant {
@@ -68,11 +69,12 @@ impl Restaurant {
     }
 
     pub fn handle_order(
-        &self,
+        &mut self,
         customer: &mut Customer,
         order: Order,
         chefs: &mut HashMap<u32, Chef>,
     ) {
+        self.orders.push(order.clone());
         for mut food in order.ordered_food {
             for chef_id in &self.chefs {
                 match chefs.get(chef_id) {

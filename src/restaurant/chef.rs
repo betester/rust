@@ -1,5 +1,7 @@
 use std::thread;
 
+use parse_duration::parse;
+
 use super::{food::Food, food_status::FoodStatus, food_type::FoodType};
 #[derive(Debug)]
 pub struct Chef {
@@ -14,7 +16,9 @@ impl Chef {
         if !(self.is_able_to_cook(&food)) {
             return Err("Cannot cook food".to_string());
         }
+        println!("chef will start cooking, please wait for {:?}",&food.cooking_time_estimation);
         thread::sleep(food.cooking_time_estimation);
+        println!("Food is done cooking!, enjoy your meal");
         food.change_food_status(FoodStatus::COOKED);
         return Ok(food);
     }
