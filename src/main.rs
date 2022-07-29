@@ -3,7 +3,7 @@ use std::io;
 
 use restaurant::{ restaurant::Restaurant};
 
-use crate::{restaurant::{chef::Chef, customer::Customer}, query::{restaurant::{create_restaurant, get_restaurant}, customer::{create_customer, get_customer}, chef::{create_chef, get_chef}}};
+use crate::{restaurant::{chef::Chef, customer::Customer}, query::{restaurant::{create_restaurant, get_restaurant}, customer::{create_customer, get_customer}, chef::{create_chef, get_chef}}, utils::input::input_number};
 
 pub mod restaurant;
 pub mod query;
@@ -36,12 +36,7 @@ fn handle_query(
         println!("7. Done");
 
         let mut query = String::new();
-
-        io::stdin()
-            .read_line(&mut query)
-            .expect("Failed to read input");
-
-        let query: u32 = query.trim().parse().expect("Please input a number");
+        let query: u32 = input_number(&mut query);
 
         match query {
             1 => create_restaurant(restaurants),

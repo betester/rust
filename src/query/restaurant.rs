@@ -110,7 +110,7 @@ pub fn add_food_menu(restaurant: &mut Restaurant) {
     input_str(&mut name);
 
     println!("Please enter the food price: (in number) ");
-    let price = input_number::<f32>(&mut name);
+    let price = input_number::<f32>(&mut price);
 
     println!("Please enter the cooking time estimation: (in hour, minute, or second) ");
     io::stdin()
