@@ -9,6 +9,7 @@ pub struct Customer {
 }
 
 impl Customer {
+
     pub fn to_string(&self) -> String {
         format!(
             "username : {}\n money : {} \n visiting_restaurant: {:?} \n order : {:?}",
@@ -33,19 +34,22 @@ impl Customer {
         }
     }
 
-    pub fn visit_restaurant(&mut self, restaurant: String) {
+    pub fn is_visiting_restaurant(&self) -> bool {
         match &self.visiting_restaurant {
-            Some(visited_restaurant) => {
-                println!("You are currently visiting {}", visited_restaurant)
-            }
-            None => self.visiting_restaurant = Some(restaurant),
+            Some(current_visiting) => true,
+            None => false,
+        }
+    }
+
+    pub fn visit_restaurant(&mut self, restaurant: String) {
+        if !self.is_visiting_restaurant() {
+            self.visiting_restaurant = Some(restaurant);
         }
     }
 
     pub fn leave_restaurant(&mut self) {
-        match &self.visiting_restaurant {
-            Some(visited_restaurant) => self.visiting_restaurant = None,
-            None => println!("You are not visiting any restaurant"),
+        if self.is_visiting_restaurant() {
+            self.visiting_restaurant = None;
         }
     }
 

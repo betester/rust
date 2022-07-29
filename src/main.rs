@@ -48,7 +48,7 @@ fn handle_query(
             2 => create_customer(customers),
             3 => create_chef(chefs),
             4 => get_restaurant(restaurants,chefs),
-            5 => get_customer(customers),
+            5 => get_customer(customers,restaurants),
             6 => get_chef(chefs),
             _ => break,
         }
