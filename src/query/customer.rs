@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap,thread};
 
 use crate::{
     restaurant::{
@@ -31,9 +31,9 @@ pub fn create_customer(customers: &mut HashMap<String, Customer>) {
 }
 
 pub fn get_customer(
-    customers: &mut HashMap<String, Customer>,
-    restaurants: &mut HashMap<String, Restaurant>,
-    chefs: &mut HashMap<u32, Chef>,
+    customers: & mut HashMap<String, Customer>,
+    restaurants: & mut HashMap<String, Restaurant>,
+    chefs: & mut HashMap<u32, Chef>,
 ) {
     println!("Insert the customer name: ");
 
@@ -54,9 +54,9 @@ pub fn get_customer(
 }
 
 pub fn customer_detail_query(
-    customer: &mut Customer,
-    restaurants: &mut HashMap<String, Restaurant>,
-    chefs: &mut HashMap<u32, Chef>,
+    customer: & mut Customer,
+    restaurants: & mut HashMap<String, Restaurant>,
+    chefs: & mut HashMap<u32, Chef>,
 ) {
     loop {
         println!("What do you want to do?");
@@ -80,9 +80,9 @@ pub fn customer_detail_query(
 }
 // TODO: refactor to make it shorter
 pub fn order_food(
-    customer: &mut Customer,
-    restaurants: &mut HashMap<String, Restaurant>,
-    chefs: &mut HashMap<u32, Chef>,
+    customer: & mut Customer,
+    restaurants: & mut HashMap<String, Restaurant>,
+    chefs: & mut HashMap<u32, Chef>,
 ) {
     if customer.is_visiting_restaurant() {
         let mut new_order = Order {
@@ -112,8 +112,6 @@ pub fn order_food(
             }
         }
 
-        restaurant.handle_order(customer, &mut new_order, chefs);
-        customer.set_order(new_order);
     } else {
         println!("You are currently not visiting any restaurant");
     }

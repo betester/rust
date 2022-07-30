@@ -1,23 +1,15 @@
-
 use super::{food::Food, food_status::FoodStatus};
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Order {
     // TODO: for efficient implementation, use avl tree
-    pub ordered_food:  Vec<Food>,
+    pub ordered_food: Vec<Food>,
     pub customer: String,
 }
 
 impl Order {
     pub fn add_food(&mut self, food: Food) -> bool {
-        if !self.is_food_ordered(&food.name)  {
-            self.ordered_food.push(food);
-            return true;
-        }
-        else {
-            println!("Food is already ordered");
-            return false;
-        }
+        self.ordered_food.push(food);
+        return true;
     }
 
     pub fn remove_food(&mut self, food: Food) {
@@ -47,7 +39,11 @@ impl Order {
 
     pub fn print_ordered_food(&self) {
         for index in 0..self.ordered_food.len() {
-            println!("{}. {}",index + 1,&self.ordered_food.get(index).unwrap().name);
+            println!(
+                "{}. {}",
+                index + 1,
+                &self.ordered_food.get(index).unwrap().name
+            );
         }
     }
 

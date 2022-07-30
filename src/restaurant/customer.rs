@@ -7,7 +7,7 @@ pub struct Customer {
     pub visiting_restaurant: Option<String>,
     pub order: Option<Order>,
     pub has_taken_order: bool,
-    pub has_paid : bool,
+    pub has_paid: bool,
 }
 
 impl Customer {
@@ -20,8 +20,8 @@ impl Customer {
 
     pub fn order_food(&mut self, food_name: &String, menu: &Menu, order: &mut Order) {
         // make sure that at least one order has been taken
-        self.has_taken_order =
-            self.has_taken_order || menu.handle_order(food_name, order, &self.money);
+        let result = menu.handle_order(food_name, order, &(&self.money - &order.calculate_price()));
+        self.has_taken_order |= result;
         println!(
             "Your current money after buying : {}",
             &self.money - order.calculate_price()
@@ -42,18 +42,16 @@ impl Customer {
         }
     }
 
-    pub fn leave_restaurant(&mut self) -> bool{
+    pub fn leave_restaurant(&mut self) -> bool {
         if self.is_visiting_restaurant() {
-            if self.has_paid  {
+            if self.has_paid {
                 self.visiting_restaurant = None;
                 return true;
-            }
-            else {
+            } else {
                 println!("You have not paid for the order yet");
                 return false;
             }
-        }
-        else {
+        } else {
             println!("You have not visit any restaurant");
             return false;
         }
@@ -81,7 +79,8 @@ impl Customer {
                 if value.is_all_food_eaten() {
                     let total_cost = value.calculate_price();
                     if self.money >= total_cost {
-                        println!("Thank you for eating here, please come again")
+                        println!("Thank you for paying");
+                        self.has_paid = true;
                     } else {
                         println!("Get out!")
                     }
